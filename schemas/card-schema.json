@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "CardModel",
+  "type": "object",
+  "required": [
+    "name",
+    "number",
+    "expirationDate",
+    "cvv"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-zA-Z ]{1,50}$"
+    },
+    "number": {
+      "type": "string",
+      "pattern": "^[0-9]{16}$"
+    },
+    "expirationDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "cvv": {
+      "type": "number",
+      "minimum": 999,
+      "maximum": 9999
+    }
+  }
+}

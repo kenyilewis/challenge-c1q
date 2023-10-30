@@ -1,0 +1,40 @@
+org: kenyigalan
+app: lambda-card
+service: lambda-card
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+custom:
+  serverless-offline:
+    printOutput: true
+    cacheInvalidationRegex: 'node_modules/'
+    host: 0.0.0.0
+  esbuild:
+    bundle: true
+    minify: true
+
+functions:
+  getCard:
+    handler: handlers.getCardHandler
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+  createCard:
+    handler: handlers.createCardHandler
+    events:
+      - httpApi:
+          path: /
+          method: post
+          request:
+            schema:
+              application/json: ${file(schemas/card-schema.json)}
+
+plugins:
+  - serverless-offline
+  # - serverless-plugin-typescript
+  - serverless-esbuild

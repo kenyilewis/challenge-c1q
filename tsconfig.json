@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "target": "es5",
+    "outDir": ".build",
+    "moduleResolution": "node",
+    "lib": ["es2015"],
+    "rootDir": "./"
+  },
+  "exclude": [
+    ".serverless/**/*",
+    ".vscode/**/*",
+    "./**/*.spec.ts",
+    "__tests__",
+    "__integration_tests__",
+    "__tests__",
+    "__testsResponses__"
+  ]
+}
