@@ -13,11 +13,11 @@ export class CardRepository implements ICardRepository {
 
     const deadLine = new Date();
     deadLine.setMinutes(deadLine.getMinutes() - 15);
-    deadLine.setHours(deadLine.getHours() + 5); //Hora UTC-5
-    
+    // deadLine.setHours(deadLine.getHours() + 5); //Hora UTC-5
+
     return this._model.findOne({
       $and: [
-        { created_at: { $lt: deadLine } },
+        { created_at: { $gte : deadLine } },
         { token_id }
       ]
     },);

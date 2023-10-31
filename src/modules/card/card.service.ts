@@ -12,8 +12,8 @@ export class CardService implements ICardService {
     if (!card) {
       handlerError({
         status: 404,
-        error: 'card_not_found',
-        message: 'Card not found',
+        error: 'card_not_found_or_token_expired ',
+        message: 'Card not found or token expired',
       })
     }
     const response : ICardResponse | {null} = {
