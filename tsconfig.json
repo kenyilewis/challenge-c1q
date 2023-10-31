@@ -8,8 +8,10 @@
     "outDir": ".build",
     "moduleResolution": "node",
     "lib": ["es2015"],
-    "rootDir": "./"
+    "rootDir": "./",
+    "esModuleInterop": true,
   },
+  
   "exclude": [
     ".serverless/**/*",
     ".vscode/**/*",
@@ -17,6 +19,7 @@
     "__tests__",
     "__integration_tests__",
     "__tests__",
-    "__testsResponses__"
+    "__testsResponses__",
+    "node_modules"
   ]
 }

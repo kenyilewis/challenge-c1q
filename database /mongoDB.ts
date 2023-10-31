@@ -1,35 +1,25 @@
 import mongoose from 'mongoose';
+import 'dotenv/config'
 
-const environments = {
-	local: 'localhost',
-	docker: 'mongodb-server'
-};
+const uri = `${process.env.MONGO_URL}/${process.env.MONGO_DB_NAME}`;
 
-const dbNames = {
-	local: 'local-burger-queen',
-	docker: 'dock-burger-queen'
-};
-// TODO install dot.env
-// const host = environments[enviroment] || 'localhost';
-// const dbName = dbNames[enviroment] || 'local-burger-queen';
-const host = 'localhost';
-const databaseName = 'test';
-
-const uri = process.env.MONGO_URL || `mongodb://${host}:27017/${databaseName}`;
-
-// const options = {
-// 	useNewUrlParser: true,
-// 	useUnifiedTopology: true
-// };
+let connectionDB: typeof mongoose | null = null;
 
 export const connectMongoDB = async () => {
-	try {
-		await mongoose.connect(uri);
-		console.info('Conexión a MongoDB exitosa: ', uri);
-
-	} catch(error) {
-		console.error('Error de conexión a MongoDB:', JSON.stringify(error));
-		throw error;
-	}
+  try {
+    if (connectionDB === null) {
+      console.info("Creating new connection to the database....");
+      connectionDB = await mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 5000,
+      });
+      console.info('Conexión a MongoDB exitosa: ', uri);
+      // return connectionDB
+    }
+    console.info(
+      "Connection already established, reusing the existing connection"
+    );
+  } catch (error) {
+    console.error('Error de conexión a MongoDB:', JSON.stringify(error));
+    throw error;
+  }
 };
-

@@ -1,28 +1,25 @@
-import { Model, Document } from 'mongoose';
-
+import { Document } from 'mongoose';
 export interface IResponse {
   statusCode: number;
   body: string;
 }
 
 export interface ICard extends Document {
-  name: string;
-  number: string;
-  cvc: string;
-  expirationDate: string;
-  token?: string;
-}
-
-export interface Itoken extends Document {
-  token: string;
+  card_number: number;
+  cvv: number;
+  expiration_month: string;
+  expiration_year: string;
+  email: string;
+  token_id?: string;
+  created_at?: Date;
 }
 
 export interface ICardRepository {
-  getAll(): Promise<ICard[] | []>;
+  getCard(token_id: string | undefined);
   createCard(data: ICard): Promise<ICard>;
 }
 
 export interface ICardService {
-  getCard(token: string | undefined): Promise<ICard[] | IResponse>;
-  createCard(pk: string | undefined, data: ICard): Promise<string | IResponse>;
+  getCard(token: string | undefined);
+  createCard(data: ICard): Promise<string | undefined>;
 }

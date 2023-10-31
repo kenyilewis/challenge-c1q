@@ -8,12 +8,12 @@ export class CardRepository implements ICardRepository {
     private readonly _model: Model<ICard>,
   ) { }
 
-  getAll(): Promise<ICard[] | []> {
+  getCard(token_id: string) {
     console.info('getAll Repository');
-    return this._model.find({});
+    return this._model.find({ id: token_id });
   }
 
-  createCard(data: ICard): Promise<ICard> {
+  createCard(data: Required<ICard>): Promise<ICard> {
     console.info('createCard Repository');
     return this._model.create(data);
   }

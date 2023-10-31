@@ -6,6 +6,13 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  # httpApi:
+  #   authorizers:
+  #     customAuthorizer:
+  #       type: request
+  #       functionName: src/auth/authorizer.authorizerHandler
+  #       identityValidationExpression: Bearer.*
+  #       identitySource: $request.header.Authorization
 
 custom:
   serverless-offline:
@@ -21,20 +28,21 @@ functions:
     handler: handlers.getCardHandler
     events:
       - httpApi:
-          path: /
+          path: /card/{id}
           method: get
+          # authorizer:
+          #   name: customAuthorizer
 
   createCard:
     handler: handlers.createCardHandler
     events:
       - httpApi:
-          path: /
+          path: /tokens
           method: post
-          request:
-            schema:
-              application/json: ${file(schemas/card-schema.json)}
+          # authorizer:
+          #   name: customAuthorizer
+          
 
 plugins:
   - serverless-offline
-  # - serverless-plugin-typescript
   - serverless-esbuild
