@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+
 export interface IResponse {
   statusCode: number;
   body: string;
@@ -14,12 +15,14 @@ export interface ICard extends Document {
   created_at?: Date;
 }
 
+export interface ICardService {
+  getCard(token: string | undefined): Promise<ICardResponse | null>;
+  createCard(data: ICard): Promise<string | undefined>;
+}
+
 export interface ICardRepository {
-  getCard(token_id: string | undefined);
+  getCard(token: string | undefined): Promise<ICardResponse | null>
   createCard(data: ICard): Promise<ICard>;
 }
 
-export interface ICardService {
-  getCard(token: string | undefined);
-  createCard(data: ICard): Promise<string | undefined>;
-}
+export type ICardResponse = Partial<Omit<ICard, 'created_at' | 'cvv' | '_id'>>;

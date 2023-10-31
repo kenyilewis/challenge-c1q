@@ -8,9 +8,20 @@ export class CardRepository implements ICardRepository {
     private readonly _model: Model<ICard>,
   ) { }
 
-  getCard(token_id: string) {
+  getCard(token_id: string | undefined): Promise<ICard | null> {
     console.info('getAll Repository');
-    return this._model.find({ id: token_id });
+
+    const deadLine = new Date();
+    deadLine.setMinutes(deadLine.getMinutes() - 15);
+    deadLine.setHours(deadLine.getHours() + 5); //Hora UTC-5
+    
+    return this._model.findOne({
+      $and: [
+        { created_at: { $lt: deadLine } },
+        { token_id }
+      ]
+    },);
+
   }
 
   createCard(data: Required<ICard>): Promise<ICard> {
@@ -18,6 +29,7 @@ export class CardRepository implements ICardRepository {
     return this._model.create(data);
   }
 
+  // TODO: Implement singleton pattern
   // static getInstance(): CardRepository {
   //   if (!this.instance) {
   //     this.instance = new CardRepository(instance);

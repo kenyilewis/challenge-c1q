@@ -117,3 +117,12 @@ export const validateAndParseCard = async (data: ICard): Promise<ICard> => {
   return data;
 }
 
+export const validateToken = (token: string | undefined): void => {
+  if (!token) {
+    handlerError({
+      status: 400,
+      error: 'token_not_found',
+      message: 'Token not found',
+    })
+  }
+}

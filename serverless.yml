@@ -28,8 +28,11 @@ functions:
     handler: handlers.getCardHandler
     events:
       - httpApi:
-          path: /card/{id}
+          path: /card/{token}
           method: get
+          parameters:
+            paths:
+              token: true
           # authorizer:
           #   name: customAuthorizer
 

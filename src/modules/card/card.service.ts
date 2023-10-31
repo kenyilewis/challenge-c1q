@@ -1,21 +1,37 @@
-import { ICard, ICardRepository, ICardService, IResponse } from "./interface";
-import { validateAndParseCard } from "../utils";
+import { ICard, ICardRepository, ICardService, ICardResponse } from "./interface";
+import { handlerError, validateAndParseCard } from "../utils";
 export class CardService implements ICardService {
   constructor(
     private cardRepository: ICardRepository,
   ) { }
 
-  async getCard(token_id: string | undefined): Promise<IResponse> {
-    console.log("Get card service");
-    const cards = await this.cardRepository.getCard(token_id);
-    return cards;
+  async getCard(token: string | undefined): Promise<ICardResponse | null> {
+    console.info("Get card service");
+    
+    const card = await this.cardRepository.getCard(token);
+    if (!card) {
+      handlerError({
+        status: 404,
+        error: 'card_not_found',
+        message: 'Card not found',
+      })
+    }
+    const response : ICardResponse | {null} = {
+      card_number: card?.card_number,
+      expiration_month: card?.expiration_month,
+      expiration_year: card?.expiration_year,
+      email: card?.email,
+      token_id: card?.token_id,
+    };
+    
+    return response;
   }
 
-  async createCard(data: ICard): Promise<string | undefined > {
-
+  async createCard(data: ICard): Promise<string | undefined> {
+    console.info("Create card service");
     const newCard = await validateAndParseCard(data);
     const cardCreated = await this.cardRepository.createCard(newCard);
-    console.log('cardCreated', cardCreated);
+
     return cardCreated.token_id;
   }
 }
