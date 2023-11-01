@@ -8,7 +8,7 @@ let connectionDB: typeof mongoose | null = null;
 export const connectMongoDB = async () => {
   try {
     if (connectionDB === null) {
-      console.info("Creating new connection to the database....");
+      console.info(`Creating new connection to the database....${uri}` );
       connectionDB = await mongoose.connect(uri, {
         serverSelectionTimeoutMS: 5000,
       });

@@ -1,11 +1,13 @@
-org: kenyigalan
-app: lambda-card
 service: lambda-card
 frameworkVersion: '3'
 
 provider:
   name: aws
   runtime: nodejs18.x
+  # stage: ${opt:stage, 'dev'}
+  # environment:
+  #   NODE_ENV: ${opt:stage, self:provider.stage}
+    # CLIENT_PK: ${ssm/CLIENT_PK}
   # httpApi:
   #   authorizers:
   #     customAuthorizer:
@@ -19,6 +21,7 @@ custom:
     printOutput: true
     cacheInvalidationRegex: 'node_modules/'
     host: 0.0.0.0
+    port: 3000
   esbuild:
     bundle: true
     minify: true

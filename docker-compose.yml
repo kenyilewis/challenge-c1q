@@ -1,0 +1,43 @@
+services:
+  backend:
+    container_name: backend
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    environment:
+      NODE_ENV: docker
+    depends_on:
+      - mongodb-server
+    networks:
+      - app-network
+
+  mongodb-server:
+    image: mongo:latest
+    container_name: mongodb-server
+    environment:
+      NODE_ENV: docker
+    networks:
+      - app-network
+      
+  backend-test:
+    container_name: backend-test
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    environment:
+      NODE_ENV: docker
+    depends_on:
+      - mongodb-server
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+

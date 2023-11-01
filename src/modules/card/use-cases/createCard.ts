@@ -21,7 +21,7 @@ export const createCardHandler = async (event: APIGatewayEvent, context: Context
     const token_id = await cardService.createCard(cardData);
 
     return {
-      statusCode: 200,
+      statusCode: 201,
       body: JSON.stringify({ token: token_id }),
     };
   } catch (error) {

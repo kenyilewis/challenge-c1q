@@ -52,7 +52,6 @@ const luhnAlgorithm = (cardNumber: number): boolean => {
 export const validateAndParseCard = async (data: ICard): Promise<ICard> => {
 
   // TODO mejorar validaciones
-  console.log('validateAndParseCard');
   const { card_number, cvv, expiration_month, expiration_year, email } = data;
   //parse data
   data.card_number = Number(card_number);
@@ -85,9 +84,8 @@ export const validateAndParseCard = async (data: ICard): Promise<ICard> => {
   }
 
   const yearNow = (new Date().getFullYear() - 1).toString();
-
   const yearBefore = (new Date().getFullYear() + 6).toString();
-  if ((!validator.isAfter(expiration_year, yearNow) && !validator.isBefore(expiration_year, yearBefore)) || !validator.isLength(expiration_year, { min: 4, max: 4 }) || !validator.isNumeric(expiration_year)) {
+  if ((!validator.isAfter(expiration_year, yearNow) || !validator.isBefore(expiration_year, yearBefore)) || !validator.isLength(expiration_year, { min: 4, max: 4 }) || !validator.isNumeric(expiration_year)) {
     handlerError({
       status: 400,
       error: 'bad_request',
@@ -95,9 +93,8 @@ export const validateAndParseCard = async (data: ICard): Promise<ICard> => {
     });
   }
 
-  const now = new Date() // UTC-5
-  now.setFullYear(now.getFullYear() - 5);
-  console.log('now', now);
+  const now = new Date() // TODO Add UTC-5 to Peru
+  now.setFullYear(now.getFullYear());
   const dateExpiration = new Date(`${expiration_year}-${expiration_month}-01`);
   if (dateExpiration < now) {
     handlerError({

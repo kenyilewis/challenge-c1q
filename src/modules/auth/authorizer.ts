@@ -5,7 +5,6 @@ import 'dotenv/config'
 const clientPk = process.env.CLIENT_PK
 
 export const authorizerHandler = async (event: APIGatewayEvent): Promise<Object> => {
-  console.log('authorizerHandler');
 
   const { authorization } = event.headers
   if (!authorization) {
