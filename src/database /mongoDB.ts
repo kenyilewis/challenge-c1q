@@ -13,7 +13,7 @@ export const connectMongoDB = async () => {
         serverSelectionTimeoutMS: 5000,
       });
       console.info('Conexión a MongoDB exitosa: ', uri);
-      // return connectionDB
+      return connectionDB
     }
     console.info(
       "Connection already established, reusing the existing connection"
