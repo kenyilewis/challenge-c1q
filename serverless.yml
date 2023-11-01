@@ -31,7 +31,7 @@ functions:
     handler: handlers.getCardHandler
     events:
       - httpApi:
-          path: /card/{token}
+          path: /cards/{token}
           method: get
           # authorizer:
           #   name: customAuthorizer

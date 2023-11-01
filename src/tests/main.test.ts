@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-import { createCard } from "../modules/card/test/createCard.integration.test";
-import { getCard } from "../modules/card/test/getCard.integration.test";
-import { connectMongoDB } from "../database /mongoDB";
+import { createCard } from '../modules/card/test/createCard.integration.test';
+import { getCard } from '../modules/card/test/getCard.integration.test';
+import { connectMongoDB } from '../database /mongoDB';
 
 describe('Main', () => {
   beforeAll(async () => {
@@ -14,6 +14,6 @@ describe('Main', () => {
   });
 
   /* Card */
-  createCard();
-  getCard();
+  void createCard();
+  void getCard();
 });

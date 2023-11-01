@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import type { Document } from 'mongoose';
 
 export interface IResponse {
   statusCode: number;
@@ -16,13 +16,17 @@ export interface ICard extends Document {
 }
 
 export interface ICardService {
-  getCard(token: string | undefined): Promise<ICardResponse | null>;
-  createCard(data: ICard): Promise<string | undefined>;
+  getCard: (token: string | undefined) => Promise<ICardResponse | null>;
+  createCard: (data: ICard) => Promise<string | undefined>;
 }
+// export interface ICardService {
+//   getCard(token: string | undefined): Promise<ICardResponse | null>;
+//   createCard(data: ICard): Promise<string | undefined>;
+// }
 
 export interface ICardRepository {
-  getCard(token: string | undefined): Promise<ICardResponse | null>
-  createCard(data: ICard): Promise<ICard>;
+  getCard: (token: string | undefined) => Promise<ICardResponse | null>;
+  createCard: (data: ICard) => Promise<ICard>;
 }
 
 export type ICardResponse = Partial<Omit<ICard, 'created_at' | 'cvv' | '_id'>>;

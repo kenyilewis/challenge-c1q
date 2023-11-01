@@ -1,26 +1,31 @@
-import { APIGatewayEvent, Context } from "aws-lambda";
-import { handlerError } from "../utils";
-import 'dotenv/config'
+import type { APIGatewayEvent } from 'aws-lambda';
+import { handlerError } from '../utils';
+import 'dotenv/config';
 
-const clientPk = process.env.CLIENT_PK
+const clientPk = process.env.CLIENT_PK;
 
-export const authorizerHandler = async (event: APIGatewayEvent): Promise<Object> => {
-
-  const { authorization } = event.headers
-  if (!authorization) {
+export const authorizerHandler = async (
+  event: APIGatewayEvent
+): Promise<unknown> => {
+  const { authorization } = event.headers;
+  if (
+    authorization === undefined ||
+    authorization === '' ||
+    authorization === null
+  ) {
     handlerError({
       status: 400,
       error: 'bad_request',
-      message: 'Missing authorization header',
+      message: 'Missing authorization header'
     });
   }
 
-  const bearerToken = authorization?.split(" ")[1];
+  const bearerToken = authorization?.split(' ')[1];
   if (bearerToken !== clientPk) {
     handlerError({
       status: 403,
       error: 'forbidden',
-      message: 'Invalid authorization token - Forbidden',
+      message: 'Invalid authorization token - Forbidden'
     });
   }
 
@@ -33,12 +38,9 @@ export const authorizerHandler = async (event: APIGatewayEvent): Promise<Object>
         {
           Action: 'execute-api:Invoke',
           Effect: 'Allow',
-          Resource: '*',
-        },
-      ],
-    },
-  }
-
-
-
-}
+          Resource: '*'
+        }
+      ]
+    }
+  };
+};

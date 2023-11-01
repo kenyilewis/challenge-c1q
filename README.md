@@ -31,7 +31,17 @@ serverless deploy
 ```
 2. Once deployed, obtain the API URL from the command's output.
 
-## Local Execution
+## Run local execution test
+1. Start the tests in local server:
+```
+npm test
+```
+## Run eslint 
+```
+npm run eslint
+```
+
+## Local execution
 To test the API locally, you can use serverless-offline:
 1. Start the local server:
 ```

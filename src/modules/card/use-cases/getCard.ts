@@ -1,27 +1,30 @@
-import { APIGatewayEvent, Context } from "aws-lambda";
+import type { APIGatewayEvent, Context } from 'aws-lambda';
 
-import { CardService } from "../card.service";
-import { connectMongoDB } from "../../../database /mongoDB";
-import { CardRepository } from "../card.repository";
-import { authorizerHandler } from "../../auth/authorizer";
-import CardModel from "../model/card.model";
-import { IResponse } from "../interface";
+import { CardService } from '../card.service';
+import { connectMongoDB } from '../../../database /mongoDB';
+import { CardRepository } from '../card.repository';
+import { authorizerHandler } from '../../auth/authorizer';
+import CardModel from '../model/card.model';
+import type { IResponse } from '../interface';
 
 const cardRepository = new CardRepository(CardModel);
 const cardService = new CardService(cardRepository);
 
-export const getCardHandler = async (event: APIGatewayEvent, context: Context): Promise<IResponse> => {
+export const getCardHandler = async (
+  event: APIGatewayEvent,
+  context: Context
+): Promise<IResponse> => {
   console.info('Get card');
   context.callbackWaitsForEmptyEventLoop = false;
   try {
-    await authorizerHandler(event)
+    await authorizerHandler(event);
     await connectMongoDB();
     const token = event.pathParameters?.token;
     const card = await cardService.getCard(token);
 
     return {
       statusCode: 200,
-      body: JSON.stringify(card),
+      body: JSON.stringify(card)
     };
   } catch (error) {
     console.error('Error getCardHandler: ', JSON.stringify(error));
