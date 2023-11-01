@@ -10,8 +10,6 @@ services:
       - "3000:3000"
     expose:
       - "3000"
-    environment:
-      NODE_ENV: docker
     depends_on:
       - mongodb-server
     networks:
@@ -20,8 +18,6 @@ services:
   mongodb-server:
     image: mongo:latest
     container_name: mongodb-server
-    environment:
-      NODE_ENV: docker
     networks:
       - app-network
       
@@ -30,8 +26,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    environment:
-      NODE_ENV: docker
     depends_on:
       - mongodb-server
     networks:
