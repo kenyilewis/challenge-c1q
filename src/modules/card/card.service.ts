@@ -16,7 +16,7 @@ export class CardService implements ICardService {
         message: 'Card not found or token expired',
       })
     }
-    const response : ICardResponse | {null} = {
+    const response : ICardResponse = {
       card_number: card?.card_number,
       expiration_month: card?.expiration_month,
       expiration_year: card?.expiration_year,

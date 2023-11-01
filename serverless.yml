@@ -30,9 +30,6 @@ functions:
       - httpApi:
           path: /card/{token}
           method: get
-          parameters:
-            paths:
-              token: true
           # authorizer:
           #   name: customAuthorizer
 

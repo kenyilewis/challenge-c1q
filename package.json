@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "sls offline start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest src/tests/*.test.ts --watchAll" 
   },
   "author": "Kenyi Galan",
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.125",
+    "@types/jest": "^29.5.7",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "dotenv": "^16.3.1",
@@ -21,6 +22,7 @@
     "serverless-esbuild": "^1.48.5",
     "serverless-offline": "^13.2.0",
     "serverless-plugin-typescript": "^2.1.5",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {

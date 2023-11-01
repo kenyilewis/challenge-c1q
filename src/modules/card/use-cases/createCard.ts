@@ -1,7 +1,7 @@
 import { APIGatewayEvent, Context } from "aws-lambda";
 
 import { CardService } from "../card.service";
-import { connectMongoDB } from "../../../../database /mongoDB";
+import { connectMongoDB } from "../../../database /mongoDB";
 import { CardRepository } from "../card.repository";
 import { authorizerHandler } from "../../auth/authorizer";
 import { IResponse } from "../interface";

@@ -85,6 +85,7 @@ export const validateAndParseCard = async (data: ICard): Promise<ICard> => {
   }
 
   const yearNow = (new Date().getFullYear() - 1).toString();
+
   const yearBefore = (new Date().getFullYear() + 6).toString();
   if ((!validator.isAfter(expiration_year, yearNow) && !validator.isBefore(expiration_year, yearBefore)) || !validator.isLength(expiration_year, { min: 4, max: 4 }) || !validator.isNumeric(expiration_year)) {
     handlerError({
@@ -94,7 +95,9 @@ export const validateAndParseCard = async (data: ICard): Promise<ICard> => {
     });
   }
 
-  const now = new Date();
+  const now = new Date() // UTC-5
+  now.setFullYear(now.getFullYear() - 5);
+  console.log('now', now);
   const dateExpiration = new Date(`${expiration_year}-${expiration_month}-01`);
   if (dateExpiration < now) {
     handlerError({
